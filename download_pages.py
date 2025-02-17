@@ -3,7 +3,7 @@ import os
 import argparse
 
 def download_page(dirname, number, url):
-    with open('{}/{}.jpg'.format(dirname, number), 'wb') as handle:
+    with open('{}/{}.{}'.format(dirname, number, url.split('.')[-1]).strip(), 'wb') as handle:
         response = requests.get(url, stream=True)
 
         if not response.ok:

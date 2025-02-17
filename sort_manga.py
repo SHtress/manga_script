@@ -10,7 +10,7 @@ DST_PATTERN = '{}_Part_{}_chapter_{}{}'
 PARSED_PATTERN = r'.+_Part_\d+_chapter_\d+(.\d+)?'
 
 SUPPORTED_EXTENSION = ('png', 'jpeg', 'jpg', )
-CONVERTABLE_EXTENSION = ('gif', )
+CONVERTABLE_EXTENSION = ('gif', 'png', 'jpeg', 'jpg' )
 PAGE_EXTENSION = '.jpeg'
 
 
@@ -69,17 +69,15 @@ def process_pages(pages):
             print(f"Unexpected {err=}, {type(err)=}")
             raise
 
-
-        if ext not in SUPPORTED_EXTENSION:
-            if ext in CONVERTABLE_EXTENSION:
-                new_dst = f'{pages}/{name.zfill(2)}{PAGE_EXTENSION}'
-                Image.open(page_dst).convert('RGB').save(new_dst)
-                os.remove(page_dst)
-                print(colored(f'Convert {name.zfill(2)}.{ext} to {name.zfill(2)}{PAGE_EXTENSION}', 'white'))
-                page_dst = new_dst
-            else:
-                print(colored(f'Can\' convert {name.zfill(2)}.{ext}', 'red'))
-                continue
+        if ext in CONVERTABLE_EXTENSION:
+            new_dst = f'{pages}/{name.zfill(2)}{PAGE_EXTENSION}'
+            Image.open(page_dst).convert('RGB').save(new_dst)
+            os.remove(page_dst)
+            print(colored(f'Convert {name.zfill(2)}.{ext} to {name.zfill(2)}{PAGE_EXTENSION}', 'white'))
+            page_dst = new_dst
+        else:
+            print(colored(f'Can\' convert {name.zfill(2)}.{ext}', 'red'))
+            continue
 
         page_list.append(page_dst)
 

@@ -49,7 +49,7 @@ def get_destintaion(parsed):
     chapter = parsed.group('chapter')
     chapter_float = parsed.group('chapter_float')
 
-    dst = DST_PATTERN.format(parsed.group('name'), part.zfill(2), chapter.zfill(3), chapter_float or '.0')
+    dst = DST_PATTERN.format(parsed.group('name'), part.zfill(4), chapter.zfill(4), chapter_float or '.0')
     dst = re.sub(r'\s+', '_', dst)
     return dst
 
@@ -73,10 +73,10 @@ def process_pages(pages):
             new_dst = f'{pages}/{name.zfill(2)}{PAGE_EXTENSION}'
             Image.open(page_dst).convert('RGB').save(new_dst)
             os.remove(page_dst)
-            print(colored(f'Convert {name.zfill(2)}.{ext} to {name.zfill(2)}{PAGE_EXTENSION}', 'white'))
+            print(colored(f'Convert {name.zfill(4)}.{ext} to {name.zfill(4)}{PAGE_EXTENSION}', 'white'))
             page_dst = new_dst
         else:
-            print(colored(f'Can\' convert {name.zfill(2)}.{ext}', 'red'))
+            print(colored(f'Can\' convert {name.zfill(4)}.{ext}', 'red'))
             continue
 
         page_list.append(page_dst)
